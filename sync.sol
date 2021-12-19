@@ -154,7 +154,8 @@ abstract contract Ownable is Context {
     address private _owner;
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
     constructor () {
-        _owner = 0xE69Ac38Cd6DA0EA9a540B47399C430131216Ced7;
+	//adding owner wallet
+        _owner = 0xF825312feefe875A027350de1F68CE67b916485E;
         emit OwnershipTransferred(address(0), _owner);
     }
     function owner() public view virtual returns (address) {
@@ -362,7 +363,7 @@ interface IUniswapV2Router02 is IUniswapV2Router01 {
     ) external;
 }
 
-contract COMF is Context, IERC20, Ownable {
+contract SYNCFORGEToken is Context, IERC20, Ownable {
     using SafeMath for uint256;
     using Address for address;
     mapping (address => uint256) private _rOwned;
@@ -371,19 +372,24 @@ contract COMF is Context, IERC20, Ownable {
     mapping (address => bool) private _isExcludedFromFee;
     mapping (address => bool) private _isExcluded;
     address[] private _excluded;
-    address private _developmentWalletAddress = 0xE69Ac38Cd6DA0EA9a540B47399C430131216Ced7;
+    address private _developmentWalletAddress = 0xB51bAe2331bE6148B4024a5DfDa33863f4d5bfB8;
     uint256 private constant MAX = ~uint256(0);
+    //max supply is 1 trillion- change accordingly
     uint256 private _tTotal = 1000000000000 * 10**18;
     uint256 private _rTotal = (MAX - (MAX % _tTotal));
     uint256 private _tFeeTotal;
-    string private _name = "Comfy Rocket";
-    string private _symbol = "COMF";
+    string private _name = "SYNCFORGEToken";
+    string private _symbol = "SNFT";
     uint8 private _decimals = 18;
+    // 2% of all transaction is distributed among all the holders
     uint256 public _taxFee = 20;
     uint256 private _previousTaxFee = _taxFee;
-    uint256 public _developmentFee = 10;
+    // 4% of all transaction is going to development wallet
+    uint256 public _developmentFee = 40;
     uint256 private _previousDevelopmentFee = _developmentFee;
-    uint256 public _liquidityFee = 50;
+    // 2% of all transaction is going to liquidity pool
+    // all together 8% of tax for every transaction
+    uint256 public _liquidityFee = 20;
     uint256 private _previousLiquidityFee = _liquidityFee;
 
     IUniswapV2Router02 public immutable uniswapV2Router;
